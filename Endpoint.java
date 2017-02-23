@@ -31,4 +31,9 @@ public class Endpoint
 		}
 		return closest_free_cacheID;
 	}
+
+	public ArrayList<Cache> setCaches(ArrayList<Cache> givenCaches){
+		caches = givenCaches;
+		return caches;
+	}
 }

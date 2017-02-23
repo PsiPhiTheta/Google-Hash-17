@@ -38,20 +38,20 @@ public class Classic
 
 
 
-		
-
+		ArrayList<Integer> intsa = new ArrayList<Integer>();
 		ArrayList<Request> helper = new ArrayList<Request>();
-		mergeSort(requests, helper, 0, requests.size() - 1);
 
 		for(int i = 0; i < requests.size(); i++){
 			Endpoint e = endpoints.get(requests.get(i).endpointId);
 			Video v = videos.get(requests.get(i).videoId);
 
+			caches = e.setCaches(caches);
 			int cacheIndex = e.closest_cache(v);
 
 			if(cacheIndex >= 0){
 				Cache c = caches.get(cacheIndex);
 				c.addVideo(v);
+				caches = e.caches;
 			}
 		}
 
@@ -61,7 +61,10 @@ public class Classic
 			for(int i = 0; i < caches.size(); i++){
 				writer.print(i);
 				for(int j = 0; j < caches.get(i).videos.size(); j++){
-					writer.print(" " + caches.get(i).videos.get(j).id);				
+					if(!intsa.contains(caches.get(i).videos.get(j).id)){
+						writer.print(" " + caches.get(i).videos.get(j).id);
+						intsa.add(caches.get(i).videos.get(j).id);				
+					}
 				}
 				writer.println();
 			}
