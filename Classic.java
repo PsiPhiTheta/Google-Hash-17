@@ -14,26 +14,46 @@ public class Classic
 	{	
 		read();
 
-		// START DOING
-		int usedCaches = 0;
-		for(int i = 0; i < nRequests; i++){
-			int videoId = requests.get(i).videoId;
-			int endpointId = requests.get(i).endpointId;
-			System.out.println("Adding video " + videoId);
-			Video v = videos.get(videoId);
-			
-			Endpoint e = endpoints.get(endpointId);
-			ArrayList<Cache> aCaches = e.caches;
 
-			for(int j = 0; j < aCaches.size(); j++){
-				if(aCaches.get(j).fits(v)){
-					System.out.println("Trying to put video " + videoId + " in cache " + j);
-					aCaches.get(j).addVideo(v);
-					break;
-				}
+		// START DOING
+		// int usedCaches = 0;
+		// for(int i = 0; i < nRequests; i++){
+		// 	int videoId = requests.get(i).videoId;
+		// 	int endpointId = requests.get(i).endpointId;
+		// 	Video v = videos.get(videoId);
+			
+		// 	Endpoint e = endpoints.get(endpointId);
+		// 	ArrayList<Cache> aCaches = e.caches;
+
+		// 	for(int j = 0; j < aCaches.size(); j++){
+		// 		if(aCaches.get(j).fits(v)){
+		// 			aCaches.get(j).addVideo(v);
+		// 			break;
+		// 		}
+		// 	}
+		// }
+
+
+		
+
+
+
+		
+
+		ArrayList<Request> helper = new ArrayList<Request>();
+		mergeSort(requests, helper, 0, requests.size() - 1);
+
+		for(int i = 0; i < requests.size(); i++){
+			Endpoint e = endpoints.get(requests.get(i).endpointId);
+			Video v = videos.get(requests.get(i).videoId);
+
+			int cacheIndex = e.closest_cache(v);
+
+			if(cacheIndex >= 0){
+				Cache c = caches.get(cacheIndex);
+				c.addVideo(v);
 			}
 		}
-
 
 		try{
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
@@ -49,7 +69,7 @@ public class Classic
 		} catch (IOException e) {
 			System.out.println("Error");
 		}
-		
+
 	}
 
 	public static void read()
@@ -98,4 +118,46 @@ public class Classic
 			sc.nextLine();
 		}
 	}
+
+
+	private static void mergeSort(ArrayList<Request> list, ArrayList<Request> helper, int low, int high) {
+        if(low < high) {
+            int middle = (low+high)/2;
+            mergeSort(list, helper, low, middle); //sort left half
+            mergeSort(list, helper, middle+1, high); //sort right half
+            merge(list, helper, low, middle, high); // merge
+        }
+    }
+     
+    private static void merge(ArrayList<Request> list, ArrayList<Request> helper, int low, int middle, int high) {
+        //This loop throws Exception
+        for(int i=low; i< high + 1; i++) {
+            helper.add(i, list.get(i));
+        }
+
+        int helperLeft = low;
+        int helperRight = middle + 1;
+        int current = low;
+
+        /**
+         * Iterate through helper array, copying back smaller element in the original list 
+         */
+        while(helperLeft < middle && helperRight < high) {
+            if(helper.get(helperLeft).nRequests < helper.get(helperRight).nRequests) {
+                list.set(current, helper.get(helperLeft));
+                helperLeft++;
+            } else {
+                list.set(current, helper.get(helperRight));
+                helperRight++;
+            }
+            current++;
+        }
+
+        //Copy remaining elements
+        int remaining = middle - helperLeft;
+        for(int j=0; j <= remaining; j++) {
+            list.set(current+j, helper.get(helperLeft+j));
+        }
+
+    }
 }

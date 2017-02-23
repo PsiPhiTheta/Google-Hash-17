@@ -15,4 +15,20 @@ public class Endpoint
 	{
 		caches.add(c);
 	}
+
+	public int closest_cache (Video givenVideo)
+	{
+		int min_latency = 999999;
+		int closest_free_cacheID = -1;
+
+		for (int i = 0; i < caches.size(); i++)  //go through all the caches available to that endpoint
+		{
+			if((caches.get(i).latency < min_latency) && (caches.get(i).fits(givenVideo)))
+			{
+				min_latency = caches.get(i).latency;
+				closest_free_cacheID = caches.get(i).id;
+			}
+		}
+		return closest_free_cacheID;
+	}
 }
