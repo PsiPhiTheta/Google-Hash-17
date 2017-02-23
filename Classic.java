@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.*;
 public class Classic
 {
 	static int nVideos, nEndpoints, nRequests, nCaches, cacheSize;
@@ -12,6 +13,8 @@ public class Classic
 	public static void main(String [] args)
 	{	
 		read();
+
+		PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 		// START DOING
 		int usedCaches = 0;
 		for(int i = 0; i < nRequests; i++){
@@ -32,15 +35,15 @@ public class Classic
 			}
 		}
 
-		System.out.println(caches.size());
+		writer.println(caches.size());
 		for(int i = 0; i < caches.size(); i++){
-			System.out.print(i);
+			writer.print(i);
 			for(int j = 0; j < caches.get(i).videos.size(); j++){
-				System.out.print(" " + caches.get(i).videos.get(j).id);				
+				writer.print(" " + caches.get(i).videos.get(j).id);				
 			}
-			System.out.println();
+			writer.println();
 		}
-		
+		writer.close();
 		
 	}
 
