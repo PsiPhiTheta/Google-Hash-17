@@ -32,7 +32,7 @@ public class Classic
 			for(int j = 0; j < caches; j++){
 				int cacheId = sc.nextInt();
 				int latency = sc.nextInt();
-				Cache c = new Cache(cacheId, latency);
+				Cache c = new Cache(cacheId, latency, cacheSize);
 				e.add(c);
 				sc.nextLine();
 			}
@@ -45,12 +45,9 @@ public class Classic
 			Request r = new Request(allRequests, videoId, endpointId)
 			sc.nextLine();
 		}
-	}
 
+		// START DOING
 
-	// START DOING
-
-	Grid grid = new Grid(columns, rows, drones, turns, payload, warehouses, Endpoints);
-	grid.run();
+		
 	}
 }
