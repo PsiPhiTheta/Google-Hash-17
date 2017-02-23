@@ -1,10 +1,10 @@
 public class Video
 {
 	final int size;
-	int weight;
-
-	public Video(int givenSize)
+	final int id;
+	public Video(int givenSize, int givenId)
 	{
 		size = givenSize;
+		id = givenId;
 	}
 }
