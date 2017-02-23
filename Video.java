@@ -3,9 +3,8 @@ public class Video
 	final int size;
 	int weight;
 
-	public Video(int givenSize, int givenWeight)
+	public Video(int givenSize)
 	{
 		size = givenSize;
-		weight = givenWeight;
 	}
 }

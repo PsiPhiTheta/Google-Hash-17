@@ -28,11 +28,12 @@ public class Classic
 			int latency = sc.nextInt();
 			int caches = sc.nextInt();
 			Endpoint e = new Endpoint(latency, caches);
+			endpoints.add(e);
 			sc.nextLine();
 			for(int j = 0; j < caches; j++){
 				int cacheId = sc.nextInt();
-				int latency = sc.nextInt();
-				Cache c = new Cache(cacheId, latency, cacheSize);
+				int lat = sc.nextInt();
+				Cache c = new Cache(cacheId, lat, cacheSize);
 				e.add(c);
 				sc.nextLine();
 			}
@@ -42,12 +43,38 @@ public class Classic
 			int videoId = sc.nextInt();
 			int endpointId = sc.nextInt();
 			int allRequests = sc.nextInt();
-			Request r = new Request(allRequests, videoId, endpointId)
+			Request r = new Request(allRequests, videoId, endpointId);
+			requests.add(r);
+			if(i == nRequests-1)
+				break;
 			sc.nextLine();
 		}
 
-		// START DOING
 
+
+
+		// START DOING
+		int usedCaches = 0;
+		String result = "";
+		for(int i = 0; i < nRequests; i++){
+			int vI = requests.get(i).videoId;
+			int ePI = requests.get(i).endpointId;
+			
+			Endpoint e = endpoints.get(ePI);
+			ArrayList<Cache> aLC = e.caches;
+			for(int j = 0; j < aLC.size(); j++){
+				if(aLC.get(j).addVideo(videos.get(vI))){
+					result += "\n" + j + " ";
+					while(aLC.get(j).addVideo(videos.get(vI))){
+						String s = vI + " ";
+						result += s;
+					}
+				}
+			}
+		}
+
+		System.out.println(result);
+		
 		
 	}
 }
