@@ -14,7 +14,6 @@ public class Classic
 	{	
 		read();
 
-		PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 		// START DOING
 		int usedCaches = 0;
 		for(int i = 0; i < nRequests; i++){
@@ -35,15 +34,21 @@ public class Classic
 			}
 		}
 
-		writer.println(caches.size());
-		for(int i = 0; i < caches.size(); i++){
-			writer.print(i);
-			for(int j = 0; j < caches.get(i).videos.size(); j++){
-				writer.print(" " + caches.get(i).videos.get(j).id);				
+
+		try{
+			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+			writer.println(caches.size());
+			for(int i = 0; i < caches.size(); i++){
+				writer.print(i);
+				for(int j = 0; j < caches.get(i).videos.size(); j++){
+					writer.print(" " + caches.get(i).videos.get(j).id);				
+				}
+				writer.println();
 			}
-			writer.println();
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("Error");
 		}
-		writer.close();
 		
 	}
 
