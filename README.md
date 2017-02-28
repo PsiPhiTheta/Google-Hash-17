@@ -1,2 +1,2 @@
 # Google-Hash-17
-Main repo for team "Classic" @ Google Hashcode 2017
+An optimisation algorithm for allocating videos to cache servers for the YouTube platform
